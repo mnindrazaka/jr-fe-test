@@ -25,7 +25,7 @@ export default class HeroDetail extends Component<HeroDetailProps> {
 
           <div style={styles.badgeContainer}>
             {hero.roles.map(role => (
-              <Fragment>
+              <Fragment key={role}>
                 <Badge color="success">{role}</Badge>
                 &nbsp;
               </Fragment>
