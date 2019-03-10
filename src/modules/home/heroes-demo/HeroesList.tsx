@@ -2,7 +2,6 @@ import * as React from 'react';
 
 import { Avatar } from '@kata-kit/avatar';
 import { Button } from '@kata-kit/button';
-import { Badge } from '@kata-kit/badge';
 import { DashboardCards } from '@kata-kit/dashboard';
 import { Drawer, DrawerHeader, DrawerBody, DrawerFooter } from '@kata-kit/drawer';
 import { Card, CardButton } from '@kata-kit/card';
@@ -10,7 +9,7 @@ import { Card, CardButton } from '@kata-kit/card';
 import { DataMap } from '~/interfaces/types';
 import { Hero } from '~/interfaces/heroes';
 import { Skeleton } from '~/components/Skeleton';
-import { fetchRequest } from '~/stores/heroes/actions';
+import { fetchRequest, selectHero } from '~/stores/heroes/actions';
 import { CardInfo, CardInfoKey, CardInfoValue } from '../components/CardInfo';
 import HeroDetail from './HeroDetail';
 
@@ -19,11 +18,12 @@ interface HeroesListProps {
   index: string[];
   data: DataMap<Hero>;
   fetchRequest: typeof fetchRequest;
+  selectHero: typeof selectHero;
+  selected?: Hero;
 }
 
 interface HomeFirstPageState {
   open: boolean;
-  selectedHero?: Hero;
 }
 
 const API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT || 'https://api.opendota.com';
@@ -52,7 +52,7 @@ class HeroesList extends React.Component<HeroesListProps, HomeFirstPageState> {
       <>
         <DrawerHeader title="Hero Detail" />
         <DrawerBody>
-          {this.state.selectedHero ? <HeroDetail hero={this.state.selectedHero} endpoint={API_ENDPOINT} /> : null}
+          {this.props.selected ? <HeroDetail hero={this.props.selected} endpoint={API_ENDPOINT} /> : null}
         </DrawerBody>
         <DrawerFooter>
           <Button color="primary" onClick={() => this.toggleDrawer()}>
@@ -100,7 +100,10 @@ class HeroesList extends React.Component<HeroesListProps, HomeFirstPageState> {
           key={hero.id}
           title={hero.localized_name}
           avatarComponent={<Avatar src={API_ENDPOINT + hero.img} size={40} />}
-          onClick={() => this.setState({ selectedHero: hero }, () => this.toggleDrawer())}
+          onClick={() => {
+            this.props.selectHero(hero);
+            this.toggleDrawer();
+          }}
         >
           <div className="mb-2">
             {hero.attack_type} - <span>{hero.roles.join(', ')}</span>
