@@ -5,6 +5,7 @@ import { Button } from '@kata-kit/button';
 import { DashboardCards } from '@kata-kit/dashboard';
 import { Drawer, DrawerHeader, DrawerBody, DrawerFooter } from '@kata-kit/drawer';
 import { Card, CardButton } from '@kata-kit/card';
+import { Banner } from '@kata-kit/banner';
 
 import { DataMap } from '~/interfaces/types';
 import { Hero } from '~/interfaces/heroes';
@@ -20,6 +21,7 @@ interface HeroesListProps {
   fetchRequest: typeof fetchRequest;
   selectHero: typeof selectHero;
   selected?: Hero;
+  errors?: string | null;
 }
 
 interface HomeFirstPageState {
@@ -68,6 +70,7 @@ class HeroesList extends React.Component<HeroesListProps, HomeFirstPageState> {
 
     return (
       <React.Fragment>
+        {this.props.errors ? <Banner state="error" message={this.props.errors} /> : null}
         <DashboardCards>
           {this.props.loading
             ? this.renderLoading()

@@ -18,7 +18,7 @@ import HeroesList from './HeroesList';
 
 interface PropsFromState {
   loading?: boolean;
-  errors?: string;
+  errors?: string | null;
   index: string[];
   data: DataMap<Hero>;
   selected?: Hero;
@@ -31,7 +31,7 @@ interface PropsFromDispatch {
 
 type Props = PropsFromState & PropsFromDispatch;
 
-const HeroesListContainer: React.FC<Props> = ({ loading, index, data, fetch, select, selected }) => (
+const HeroesListContainer: React.FC<Props> = ({ loading, index, data, fetch, select, selected, errors }) => (
   <HeroesList
     loading={loading}
     index={index}
@@ -39,6 +39,7 @@ const HeroesListContainer: React.FC<Props> = ({ loading, index, data, fetch, sel
     fetchRequest={fetch}
     selectHero={select}
     selected={selected}
+    errors={errors}
   />
 );
 
