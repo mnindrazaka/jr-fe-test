@@ -25,7 +25,7 @@ export const fetchSuccess = (heroes: Hero[]) => {
   return action(HeroesActionTypes.FETCH_SUCCESS, { index, data });
 };
 
-export const fetchError = (message: string) => action(HeroesActionTypes.FETCH_ERROR, message);
+export const fetchError = (message: string) => action(HeroesActionTypes.FETCH_ERROR, { message });
 
 export const selectHero = (hero: Hero) => action(HeroesActionTypes.SELECT_HERO, { hero });
 

@@ -41,7 +41,7 @@ const data: Reducer<HeroesState['data']> = (state = initialState.data, { type, p
 const errors: Reducer<HeroesState['errors']> = (state = initialState.errors, { type, payload }) => {
   switch (type) {
     case HeroesActionTypes.FETCH_ERROR: {
-      return payload.error;
+      return payload.message;
     }
     default: {
       return state;
